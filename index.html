@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Digital Restaurant Order Manager</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>Digital Restaurant Order Manager</h1>
+  <p class="subtitle">Fast order entry, kitchen queue tracking, and order history using core data structures.</p>
+
+  <div class="app-container">
+    <!-- COLUMN 1: MENU -->
+    <div class="column column-menu">
+      <div class="panel">
+        <div class="panel-header">
+          <h2>Menu</h2>
+        </div>
+        <div class="menu-gallery">
+          <div class="menu-grid" id="menuGrid">
+            <!-- Filled by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COLUMN 2: ORDER (form + active orders) -->
+    <div class="column column-order">
+      <div class="panel">
+        <div class="panel-header">
+          <h2>Create Order</h2>
+          <span class="badge">Tables 1–15</span>
+        </div>
+
+        <form id="orderForm">
+          <div class="form-row">
+            <div>
+              <label for="tableNo">Table Number</label>
+              <select id="tableNo">
+                <option value="">Select table</option>
+              </select>
+            </div>
+            <div>
+              <label for="modifier">Order Type / Modifier</label>
+              <select id="modifier">
+                <option value="">Dine-in (default)</option>
+                <option value="Takeout">Takeout</option>
+                <option value="No onions">No onions</option>
+                <option value="Extra spicy">Extra spicy</option>
+                <option value="Less salt">Less salt</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="item-row">
+            <div>
+              <label for="itemSelect">Menu Item (dropdown)</label>
+              <select id="itemSelect"></select>
+            </div>
+            <div>
+              <label for="qty">Qty (max 20)</label>
+              <input type="number" id="qty" min="1" max="20" value="1" />
+            </div>
+          </div>
+
+          <button type="button" class="btn secondary" id="addItemBtn">Add Item to Order</button>
+          <p class="small-text" id="currentItemsText">No items added yet.</p>
+
+          <div style="margin-top: 10px;">
+            <button type="submit" class="btn">Create Order</button>
+            <button type="button" class="btn danger" id="undoBtn">Undo Last Edit</button>
+          </div>
+        </form>
+
+        <hr class="divider" />
+
+        <div class="panel-header">
+          <h2>Active Orders</h2>
+          <span class="badge" id="activeCountBadge">0 active</span>
+        </div>
+        <div class="orders-list" id="activeOrdersList"></div>
+      </div>
+    </div>
+
+    <!-- COLUMN 3: KITCHEN QUEUE + HISTORY + SEARCH & SUMMARY -->
+    <div class="column column-history">
+      <div class="panel">
+        <div class="panel-header">
+          <h2>Kitchen Queue</h2>
+          <button class="btn secondary" id="processNextBtn">Process Next</button>
+        </div>
+        <p class="small-text">FIFO queue: earliest received orders are prepared first.</p>
+        <div class="kitchen-list" id="kitchenQueueList"></div>
+
+        <hr class="divider" />
+
+        <div class="history-tools">
+          <h3 class="history-title">History Tools</h3>
+          <input
+            type="text"
+            id="historySearch"
+            class="history-search"
+            placeholder="Search by OrderID, table, or type..."
+          />
+          <div class="daily-summary" id="dailySummary">
+            <span class="small-text">Today: 0 orders • ₱0 total</span>
+          </div>
+        </div>
+
+        <hr class="divider" />
+
+        <div class="panel-header">
+          <h2>Order History</h2>
+        </div>
+        <div class="history-list" id="historyList"></div>
+
+        <div class="summary" id="summaryBar">
+          <span id="totalOrdersSpan">Total orders: 0</span>
+          <span id="deliveredSpan">Delivered: 0</span>
+          <span id="cancelledSpan">Cancelled: 0</span>
+        </div>
+
+        <!-- Popup for Total Orders -->
+        <div id="totalOrdersPopup" class="popup">
+          <div class="popup-content">
+            <h3>Total Orders</h3>
+            <div id="totalOrdersList"></div>
+            <button id="closeTotalPopup" class="btn">Close</button>
+          </div>
+        </div>
+
+        <!-- Popup for Delivered -->
+        <div id="deliveredPopup" class="popup">
+          <div class="popup-content">
+            <h3>Delivered Orders</h3>
+            <div id="deliveredOrdersList"></div>
+            <button id="closeDeliveredPopup" class="btn">Close</button>
+          </div>
+        </div>
+
+        <!-- Popup for Cancelled -->
+        <div id="cancelledPopup" class="popup">
+          <div class="popup-content">
+            <h3>Cancelled Orders</h3>
+            <div id="cancelledOrdersList"></div>
+            <button id="closeCancelledPopup" class="btn">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
